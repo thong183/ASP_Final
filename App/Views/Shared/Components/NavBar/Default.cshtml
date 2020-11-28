@@ -1,0 +1,17 @@
+﻿@model IEnumerable<App.Models.BookCategory>
+
+@{
+    Layout = null;
+}
+
+<div class="container-fluid topmenu sticky">
+    <div class="container txt-center">
+        <a asp-action="BookList" asp-controller="Home" class="topmenu__href">Tất cả</a>
+        @foreach (var category in Model)
+        {
+            <a asp-action="BookListCategory" asp-controller="Home" asp-route-id="@category.Id" class="topmenu__href text-capitalize">@category.Name</a>
+        }
+        <a asp-action="CategoryList" asp-controller="Home" class="topmenu__href">Thể loại</a>
+
+    </div>
+</div>

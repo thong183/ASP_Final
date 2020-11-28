@@ -1,0 +1,187 @@
+﻿@model App.ViewModels.BookHome
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/User/_UserLayout.cshtml";
+}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <div class="col-md-12">
+                <h2>Sách bán chạy</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="row">
+                            @foreach(var item in Model.BooksTopSale)
+                            {
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="~/uploads/@item.Cover"></div>
+                                    <div class="card-body">
+                                        <h5>@item.Title</h5>
+                                        <h4 class="pt-1 pb-2">@item.Price</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm"><a asp-controller="Home" asp-action="BookDetail" asp-route-id="@item.Id" class="iblck">Xem ngay</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row text-center mb-3">
+            <div class="col-md-12">
+                <h2>Sách nổi bật</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="row">
+                            @foreach (var item in Model.BooksTopLove)
+                            {
+                                <div class="col-md-3">
+                                    <div class="card">
+                                        <div class="card-img"><img src="~/uploads/@item.Cover"></div>
+                                        <div class="card-body">
+                                            <h5>@item.Title</h5>
+                                            <h4 class="pt-1 pb-2">@item.Price</h4>
+
+                                            <button type="button" class="btn btn-outline-danger btn-block btn-sm"><a asp-controller="Home" asp-action="BookDetail" asp-route-id="@item.Id" class="iblck">Xem ngay</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img"><img src="https://img.gaadicdn.com/images/carexteriorimages/upcoming/360x240/Jeep/Jeep-Renegade/047.jpg"></div>
+                                    <div class="card-body">
+                                        <h5>Renault KWID</h5>
+                                        <h4 class="pt-1 pb-2">Rs. 5.44-6.77 Lac</h4>
+
+                                        <button type="button" class="btn btn-outline-danger btn-block btn-sm">Lets Judge it.</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+
+
+

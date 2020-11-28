@@ -1,0 +1,91 @@
+@model App.ViewModels.HomeBookDetail
+@{
+    ViewBag.Titlte = "Chi tiết sách";
+    Layout = "~/Views/User/_UserLayout.cshtml";
+}
+
+<div class="container-fluid section__product">
+    <div class="row">
+        <!-- Sản phẩm tương tự -->
+        <div class="col-3 product__side">
+            <p class="product_side__title txt-center">Sách đề xuất cho bạn</p>
+            @{
+                int i = 0;
+            }
+            @foreach(var item in Model.Books)
+            {
+                @if (i <= 5)
+                {
+                    <a asp-action="BookDetail" asp-controller="Home" asp-route-id="@item.Id" class="blck other_product">
+                        <img class="iblck fl" src="~/uploads/@item.Cover">
+                        <div class="iblck">
+                            <p class="other_product__name">@item.Title</p>
+                            @if (item.Saleoff != 0)
+                            {
+                                <p class="other_product__oldprice">@String.Format("{0:0,0 VNĐ}", item.Price) </p>
+                                <p class="other_product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price - (item.Price / 100 *item.Saleoff))</p>
+                            }
+                            else
+                            {
+                                <p class="other_product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price)</p>
+                            }
+                        </div>
+                    </a>
+                    i++;
+                }
+            }
+        </div><!-- end of Sản phẩm tương tự -->
+        <!-- Chi tiết sản phẩm -->
+        <div class="col-9 product__main">
+            <!-- Tên sản phẩm -->
+            <p class="product__main__name">@Model.Book.Title</p>
+            <!-- Link sản phẩm -->
+            <div class="product__main__link">
+                <a asp-controller="User" asp-action="Index" class="iblck">Trang chủ </a><i class="fas fa-chevron-right"></i>
+                <a asp-controller="Home" asp-action="BookDetail" asp-route-id="@Model.Book.Id" class="iblck">@Model.Book.Title</a>
+            </div>
+
+            <div class="row">
+                <!-- Thông tin chính -->
+                <div class="col-9">
+                    <div class="row">
+                        <img src="~/uploads/@Model.Book.Cover" class="col-sm-5" style="height:350px; width: auto">
+                        <table class="col-sm-7">
+                            <tr>
+                                <th>Tựa sách</th>
+                                <td>@Model.Book.Title</td>
+                            </tr>
+                            <tr>
+                                <th>Giá cũ</th>
+                                <td class="oldprice">@String.Format("{0:0,0 VNĐ}", Model.Book.Price)</td>
+                            </tr>
+                            <tr>
+                                <th>Giá mới</th>
+                                <td class="newprice">@String.Format("{0:0,0 VNĐ}", Model.Book.Price - (Model.Book.Price / 100 * Model.Book.Saleoff))</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <div style="font-size: 26px; font-weight: bold">Mô Tả</div>
+                        @Html.Raw(Model.Book.Description)
+                    </div>
+                </div>
+                <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=463536794309406&autoLogAppEvents=1"></script>
+                <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="" data-numposts="5"></div>
+            <div class="col-3 relative">
+                    <div class="product__main__info">
+                        <p class="iblck"><i class="fas fa-heart"></i> @Model.Book.NLove</p>
+                        <p class="iblck"><i class="fas fa-eye"></i> @Model.Book.NSeen</p>
+                    </div>
+                    <div class="product__main__actions sticky">
+                        <a href="#" class="point action action--addtocart"><i class="fas fa-shopping-cart"></i> THÊM VÀO GIỎ</a>
+
+                    </div>
+                </div><!-- end of Các nút Mua hàng,Thêm vào giỏ,Chia sẻ -->
+            </div><!-- end of Chi tiết sản phẩm -->
+        </div>
+    </div>
+</div>
+
+

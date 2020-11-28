@@ -1,0 +1,126 @@
+﻿@model IEnumerable<App.Models.Book>
+
+@{
+    ViewData["Title"] = "BookList";
+    Layout = "~/Views/User/_UserLayout.cshtml";
+}
+
+
+<div class="container-fluid section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="section__title">Tất cả</h1>
+                <div class="product-carousel">
+                    <div class="row" id="books">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-3 product">
+                                <div class="single-product">
+                                    @if (item.Saleoff != 0)
+                                    {
+                                        <p class="mrg0 iblck fl product__saleoff">-@item.Saleoff%</p>
+                                    }
+                                    <p class="mrg0 iblck fr product__views">
+                                        <i class="fas fa-heart"></i> @item.NLove
+                                        <i class="fas fa-eye"></i> @item.NSeen
+                                    </p>
+                                    <div class="product-f-image">
+                                        <img src="~/uploads/@item.Cover" class="product__image" alt="" />
+                                    </div>
+
+                                    <div class="product__info ">
+                                        <a asp-controller="Home" asp-action="BookDetail" asp-route-id="@item.Id" class="mrg0 product__name" style="color:red">@item.Title</a>
+                                        @if (item.Saleoff != 0)
+                                        {
+                                            <p class="mrg0 product__oldprice" style="color:black">@String.Format("{0:0,0 VNĐ}", item.Price) </p>
+                                            <p class="mrg0 product__newprice" style="color:green">@String.Format("{0:0,0 VNĐ}", item.Price - item.Price * item.Saleoff / 100)</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mrg0 product__newprice" style="color:black">@String.Format("{0:0,0 VNĐ}", item.Price)</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="text-center" id="pagination">
+                        @if (ViewBag.pageCount != null)
+                        {
+                            @for (int i = 1; i <= ViewBag.pageCount; i++)
+                            {
+                                <div data-page="@i" class="btn btn-primary _page">@i</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end of section Sản phẩm mới -->
+
+<template>
+    
+</template>
+
+@section Scripts
+{
+    <script>
+        $('#pagination').on("click", "div", function () {
+            let page = this.innerText;
+            console.log(page);
+            $("#books").empty();
+            fetch(`/api/Books/GetPage/${page}`).then(b => b.json()).then(b => {
+                b.forEach(x => {
+                    let tmp = `
+                        <div class="col-3 product">
+                            <div class="single-product">
+                            ${
+                        x.saleoff?
+                                `<p class="mrg0 iblck fl product__saleoff item_saleOff">${x.saleoff}</p>`: ``
+                            }
+                                <p class="mrg0 iblck fr product__views">
+                                    <i class="fas fa-heart"></i> ${x.nLove}
+                                    <i class="fas fa-eye"></i> ${x.nSeen}
+                                </p>
+                                <div class="product-f-image">
+                                    <img src="/uploads/${x.cover}" class="product__image item_image" alt="" />
+                                </div>
+
+                                <div class="product__info ">
+                                    <a class="mrg0 product__name item_title" style="color:red"></a>
+                                    <div class="item_price">
+                                        ${
+                        x.saleoff ?
+                            `<p class="mrg0 product__oldprice item_oldprice" style="color:black">${formatMoney(x.price)} VND</p>
+                                            <p class="mrg0 product__newprice item_newprice" style="color:green">${formatMoney(x.price - x.price * x.saleoff / 100)} VND</p>` :
+                            `<p class="mrg0 product__newprice" style="color:black">${formatMoney(x.price)} VND</p>`
+                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $("#books").append(tmp);
+                })
+            });
+        })
+
+        function formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+          try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+          } catch (e) {
+            console.log(e)
+          }
+        };
+    </script>
+}

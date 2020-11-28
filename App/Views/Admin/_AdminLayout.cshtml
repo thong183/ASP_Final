@@ -1,0 +1,41 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="~/bootstrap4/css/bootstrap.css">
+    <link rel="stylesheet" href="~/fas/css/all.css">
+    <link rel="stylesheet" href="~/css/atomic.css">
+    <link rel="stylesheet" href="~/css/admin.css">
+    <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 padd0">
+                <div class="sidemenu">
+                    <a asp-controller="Home" asp-action="Index" target="_blank" class="sidemenu__link sidemenu__link--website"><i class="fas fa-globe-asia"></i> BookStore</a>
+                    <a asp-controller="Book" asp-action="Index" class="sidemenu__link "><i class="fas fa-book"></i> Sách</a>
+                    <a asp-controller="Admin" asp-action="UsersOverview" class="sidemenu__link "><i class="fas fa-user"></i> Khách hàng </a>
+                    <a asp-controller="Admin" asp-action="AdminsOverview" class="sidemenu__link "><i class="fas fa-user-tie"></i> Quản trị </a>
+                    <a asp-controller="Admin" asp-action="Login" class="sidemenu__link sidemenu__link--logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất </a>
+                </div>
+            </div>
+            <div class="col-10 padd0">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/bootstrap4/js/bootstrap.js"></script>
+    <script src="~/fas/js/all.js"></script>
+</body>
+</html>

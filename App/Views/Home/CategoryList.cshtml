@@ -1,0 +1,16 @@
+﻿@model IEnumerable<App.Models.BookCategory>
+@{
+    Layout = "~/Views/User/_UserLayout.cshtml";
+
+}
+
+    <div class="container" style="min-height: 400px">
+        <div class="row justify-content-center">
+            @foreach (var category in Model)
+            {
+                <a class="col-md-3 col-sm-4 btn btn-success m-3" style="font-size: 20px" asp-action="BookListCategory" asp-controller="Home" asp-route-id="@category.Id">
+                    <span class="text-white text-capitalize">@category.Name</span>
+                </a>
+            }
+        </div>
+    </div>

@@ -1,0 +1,133 @@
+@model App.ViewModels.BookNew
+@{
+    ViewData["Title"] = "Thêm sách mới";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid create">
+    <a asp-action="Index" asp-controller="Book" class="overview__button overview__button"><i class="fas fa-backward"></i> Quay lại</a>
+    <hr>
+        <p class="create__title">Thêm sách mới</p>
+        <form asp-controller="Book" asp-action="New" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Title">Tựa đề sách</label>
+                    <input asp-for="@Model.Book.Title" type="text" class="form-control" />
+                    <span asp-validation-for="@Model.Book.Title" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Author">Tác giả</label>
+                    <input asp-for="@Model.Book.Author" type="text" class="form-control" />
+                    <span asp-validation-for="@Model.Book.Author" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.CategoryId">Loại sách</label>
+                    <select asp-for="@Model.Book.CategoryId" class="form-control">
+                        @foreach (var cate in Model.BookCategories)
+                        {
+                            <option value="@cate.Id">
+                                @cate.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Publisher">Nhà xuất bản</label>
+                    <input type="text" class="form-control" asp-for="@Model.Book.Publisher">
+                    <span asp-validation-for="@Model.Book.Publisher" class="text-danger"></span>
+                </div>
+                 <div class="col form-group">
+                    <label asp-for="@Model.Book.DatePublish">Ngày xuất bản</label>
+                    <input type="date" class="form-control" asp-for="@Model.Book.DatePublish">
+                    <span asp-validation-for="@Model.Book.DatePublish" class="text-danger"></span>
+                </div>
+            </div>
+        
+            <div class="form-row">
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Translater">Dịch giả</label>
+                    <input type="text" class="form-control" asp-for="@Model.Book.Translater">
+                    <span asp-validation-for="@Model.Book.Translater" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Size">Kích cỡ</label>
+                    <input type="text" class="form-control" asp-for="@Model.Book.Size">
+                    <span asp-validation-for="@Model.Book.Size" class="text-danger"></span>
+                </div>
+                 <div class="col form-group">
+                    <label asp-for="@Model.Book.Pages">Số trang</label>
+                    <input type="text" class="form-control" asp-for="@Model.Book.Pages">
+                    <span asp-validation-for="@Model.Book.Pages" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Price">Đơn giá</label>
+                    <input asp-for="@Model.Book.Price" type="text" class="form-control" onchange="Caculate()"/>
+                    <span asp-validation-for="@Model.Book.Price" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="@Model.Book.Saleoff">Phần trăm giảm giá</label>
+                    <input asp-for="@Model.Book.Saleoff" type="text" class="form-control" onchange="Caculate()"/>
+                    <span asp-validation-for="@Model.Book.Saleoff" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label for="SalePrice">Giá bán ra</label>
+                    <input id="SalePrice" type="text" class="form-control" value="0" readonly />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="custom-file">
+                    <input asp-for="@Model.Cover" type="file" class="custom-file-input form-control" />
+                    <label class="custom-file-label" asp-for="@Model.Cover">Ảnh sản phẩm</label>
+                    <script>
+                        // Hiển thị tên file đang được chọn
+                        $(".custom-file-input").on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Book.Description">Mô tả sách</label>
+                <textarea rows="10" cols="300" class="form-control" asp-for="@Model.Book.Description"></textarea>
+                <!-- Đổi textarea thành ckeditor -->
+                <script src="~/lib/ckeditor/ckeditor.js"></script>
+                <script>
+                    CKEDITOR.replace("Book_Description");
+                    //ClassicEditor
+                        //  .create(document.querySelector('#Product_Description'))
+                        //  .then(editor => {
+                        //       window.editor = editor;
+                        //   })
+                        //  .catch(err => {
+                        //      console.error(err.stack);
+                        //  });
+                </script>
+                <span asp-validation-for="@Model.Book.Description" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="button button--submit">HOÀN TẤT</button>
+            </div>
+            
+            <input type="hidden" asp-for="@Model.Book.Cover" value="#">
+        </form>
+</div>
+
+<script>
+    function Caculate()
+    {
+        var price = parseInt(document.getElementById("Book_Price").value,10);
+        var sale = parseInt(document.getElementById("Book_Saleoff").value,10);
+        var sold = price - (price/100)*sale;
+        document.getElementById("SalePrice").value = sold;
+    }
+</script>
